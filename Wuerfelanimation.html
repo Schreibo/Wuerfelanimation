@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Würfel zu Würfelnetz Animation</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .scene {
+      width: 500px;
+      height: 500px;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cube {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      transform-style: preserve-3d;
+      transform: rotateX(-25deg) rotateY(35deg);
+      animation: rotateCube 3s ease-in-out forwards;
+    }
+
+    .face {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: rgba(0, 150, 255, 0.85);
+      border: 2px solid white;
+      box-sizing: border-box;
+      transition: transform 2.5s ease-in-out;
+    }
+
+    /* 3D Würfel */
+    .front  { transform: translateZ(50px); }
+    .back   { transform: rotateY(180deg) translateZ(50px); }
+    .right  { transform: rotateY(90deg) translateZ(50px); }
+    .left   { transform: rotateY(-90deg) translateZ(50px); }
+    .top    { transform: rotateX(90deg) translateZ(50px); }
+    .bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+    @keyframes rotateCube {
+      0% {
+        transform: rotateX(-25deg) rotateY(35deg);
+      }
+      100% {
+        transform: rotateX(-15deg) rotateY(395deg);
+      }
+    }
+
+    /* Würfelnetz liegend */
+    .cube.unfold {
+      transform: rotateX(75deg) rotateY(0deg) translateY(40px);
+    }
+
+    .cube.unfold .front {
+      transform: translate(0, 0);
+    }
+
+    .cube.unfold .top {
+      transform: translateY(-102px);
+    }
+
+    .cube.unfold .bottom {
+      transform: translateY(102px);
+    }
+
+    .cube.unfold .left {
+      transform: translateX(-102px);
+    }
+
+    .cube.unfold .right {
+      transform: translateX(102px);
+    }
+
+    .cube.unfold .back {
+      transform: translateY(204px);
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="cube" id="cube">
+      <div class="face front"></div>
+      <div class="face back"></div>
+      <div class="face right"></div>
+      <div class="face left"></div>
+      <div class="face top"></div>
+      <div class="face bottom"></div>
+    </div>
+  </div>
+
+  <script>
+    const cube = document.getElementById('cube');
+
+    setTimeout(() => {
+      cube.classList.add('unfold');
+    }, 3000);
+  </script>
+</body>
+</html>
